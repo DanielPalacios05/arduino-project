@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Medidor de temperatura</title>
+  </head>
+  <body onload="init()">
+    <h1 id="tempLog"></h1>
+
+    <h2 style="text-align: center">Temperatura actual:</h2>
+    <button id="tempToggleButton" onclick="toggleTemp()">Apagar sensor</button>
+    <canvas class="c"> </canvas>
+  </body>
+
+  <script>
+    tempOn = true;
+    websocket = new WebSocket("ws://" + window.location.hostname + ":81/");
+    websocket.onmessage = function (event) {
+      data = JSON.parse(event.data);
+      document.getElementById("tempLog").innerHTML = "Temperatura:" + data.temp;
+    };
+
+    function toggleTemp() {
+      if (tempOn == true) {
+        websocket.close();
+        document.getElementById("tempLog").innerHTML = "Sensor Apagado";
+        document.getElementById("tempToggleButton").innerHTML = "Prender sensor";
+
+        tempOn = false;
+      } else {
+        websocket.onmessage = function (event) {
+          data = JSON.parse(event.data);
+          document.getElementById("tempLog").innerHTML = "Temperatura:" + data.temp;
+        };
+
+        document.getElementById("tempToggleButton").innerHTML = "Apagar sensor";
+
+        tempOn = true;
+
+        //Poner
+      }
+    }
+  </script>
+</html>
