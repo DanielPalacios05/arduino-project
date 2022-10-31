@@ -36,8 +36,10 @@ void setColor() {
 
    int temp = Wire.read();
 
-
-   if (temp < 35) {
+  if(temp==0){
+    turnRgbOn(0, 0, 0);
+  }
+  else if (temp < 35) {
        turnRgbOn(green[0], green[1], green[2]);
     }
   else if (temp > 35 && temp < 50) {
@@ -46,7 +48,7 @@ void setColor() {
   } else if (temp > 50) {
 
     turnRgbOn(red[0], red[1], red[2]);
-  }
+  } 
 
 
   Serial.println(temp);
