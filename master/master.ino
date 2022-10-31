@@ -28,7 +28,12 @@ const char* html = R"=====(
       </button>
     </div>
 
-    <canvas id="tempChart" width="400" height="400" ></canvas>
+    <div style="text-align: center; width:50em;height:50em">
+        <canvas id="tempChart" width="100" height="100" ></canvas>
+  </div>
+
+
+
 
     <script>
       var dataPlot;
@@ -59,6 +64,20 @@ const char* html = R"=====(
               fill: false,
             },
           ],
+        },
+
+        options: {
+          scales: {
+                    yAxes: [{
+                            display: true,
+                            ticks: {
+                                beginAtZero: true,
+                                steps: 10,
+                                stepValue: 5,
+                                max: 150,
+                            }
+                        }]
+          }
         },
       });
 
